@@ -232,6 +232,62 @@
     });
   });
 
+  const onelineCode = $("#oneline-code");
+  const onelineTabs = $$(".oneline-tab");
+  const onelineNote = $("#oneline-note");
+
+  function paintOneline(tab) {
+    if (!onelineCode) return;
+    const windows = tab === "windows";
+    onelineCode.textContent = windows
+      ? onelineCode.dataset.windows
+      : onelineCode.dataset.unix;
+    if (onelineNote) {
+      onelineNote.innerHTML = windows
+        ? 'Clones to <code>%USERPROFILE%\\Llama-RPC-Farm</code>, installs dependencies, and adds <code>farmctl</code> to your path.'
+        : 'Clones to <code>~/Llama-RPC-Farm</code>, installs everything, and puts <code>farmctl</code> on your PATH.';
+    }
+  }
+
+  onelineTabs.forEach((tab) => {
+    tab.addEventListener("click", () => {
+      onelineTabs.forEach((t) => {
+        const active = t === tab;
+        t.classList.toggle("active", active);
+        t.setAttribute("aria-selected", String(active));
+      });
+      paintOneline(tab.dataset.oneline);
+    });
+  });
+
+  const agentOnelineCode = $("#agent-oneline-code");
+  const agentOnelineTabs = $$(".oneline-tab[data-agent-oneline]");
+  const agentOnelineNote = $("#agent-oneline-note");
+
+  function paintAgentOneline(tab) {
+    if (!agentOnelineCode) return;
+    const windows = tab === "windows";
+    agentOnelineCode.textContent = windows
+      ? agentOnelineCode.dataset.windows
+      : agentOnelineCode.dataset.unix;
+    if (agentOnelineNote) {
+      agentOnelineNote.innerHTML = windows
+        ? 'Installs the peer agent as a boot-triggered scheduled task. The farm app pairs it automatically during discovery.'
+        : 'Installs the user service on port <code>8198</code>. The farm app pairs it automatically during discovery.';
+    }
+  }
+
+  agentOnelineTabs.forEach((tab) => {
+    tab.addEventListener("click", () => {
+      agentOnelineTabs.forEach((t) => {
+        const active = t === tab;
+        t.classList.toggle("active", active);
+        t.setAttribute("aria-selected", String(active));
+      });
+      paintAgentOneline(tab.dataset.agentOneline);
+    });
+  });
+
   function copyText(text) {
     if (navigator.clipboard && window.isSecureContext) {
       return navigator.clipboard.writeText(text);
@@ -318,6 +374,7 @@
     if (!Number.isFinite(bytes) || bytes <= 0) return "";
     const mb = bytes / (1024 * 1024);
     if (mb >= 1024) return `${(mb / 1024).toFixed(1)} GB`;
+    if (mb < 1) return `${Math.max(1, Math.round(bytes / 1024))} KB`;
     return `${Math.round(mb)} MB`;
   }
 
@@ -337,6 +394,10 @@
       if (kind === "macos") return n.startsWith("llama-rpc-farm_") && n.endsWith(".pkg");
       if (kind === "linux") return n.startsWith("llama-rpc-farm_") && n.endsWith("_amd64.deb");
       if (kind === "source") return n.startsWith("llama_rpc_farm-") && n.endsWith(".whl");
+      if (kind === "agent-windows") return n.startsWith("llama-peer-agent") && n.includes("windows") && n.endsWith("setup.exe");
+      if (kind === "agent-macos") return n.startsWith("llama-peer-agent_") && n.endsWith(".pkg");
+      if (kind === "agent-linux") return n.startsWith("llama-rpc-farm-agent_") && n.endsWith("_amd64.deb");
+      if (kind === "agent-source") return n.startsWith("llama_rpc_farm_agent-") && n.endsWith(".whl");
       return false;
     });
   }
