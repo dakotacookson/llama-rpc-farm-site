@@ -306,19 +306,39 @@
             <div class="theme-palette" id="theme-palette" aria-label="Theme palettes">
               <button type="button" class="palette active" data-theme="obsidian" data-name="Obsidian" data-desc="Volcanic black, iridescent violet, and molten copper. Built for late-night tinkering." data-accent="#b7a4ff" data-accent2="#a855f7" aria-label="Obsidian theme" style="--swatch: #b7a4ff"></button>
               <button type="button" class="palette" data-theme="sapphire" data-name="Sapphire" data-desc="Royal blue, sapphire light, and a thin gold ribbon. Deep, calm, and precise." data-accent="#4f9bff" data-accent2="#f5c76a" aria-label="Sapphire theme" style="--swatch: #4f9bff"></button>
-              <button type="button" class="palette" data-theme="larimar" data-name="Larimar" data-desc="Bioluminescent ocean teal with a warm gold edge. Quietly alive." data-accent="#6ff0ff" data-accent2="#f5c76a" aria-label="Larimar theme" style="--swatch: #6ff0ff"></button>
-              <button type="button" class="palette" data-theme="ruby" data-name="Ruby" data-desc="Crimson glass and polished gold. For when the farm should feel like it means business." data-accent="#ff3f4b" data-accent2="#f5c76a" aria-label="Ruby theme" style="--swatch: #ff3f4b"></button>
+              <button type="button" class="palette" data-theme="dbz" data-name="Dragon Ball Z" data-desc="Spice-orange energy over deep blue. Maximum power, minimum subtlety." data-accent="#ff8a00" data-accent2="#3b82f6" aria-label="Dragon Ball Z theme" style="--swatch: #ff8a00"></button>
+              <button type="button" class="palette" data-theme="warhammer40k" data-name="Warhammer 40,000" data-desc="Brass, blood, and blackened steel. Grimdark by default." data-accent="#d4af37" data-accent2="#b22222" aria-label="Warhammer 40,000 theme" style="--swatch: #d4af37"></button>
               <button type="button" class="palette" data-theme="dune" data-name="Dune" data-desc="Spice orange over deep desert navy. A little sci-fi, a little sandstorm." data-accent="#ff9a4d" data-accent2="#6aa9ff" aria-label="Dune theme" style="--swatch: #ff9a4d"></button>
+              <button type="button" class="palette" data-theme="gameboy" data-name="Game Boy" data-desc="Four shades of green and a lifetime of nostalgia. Pixel-perfect and easy on the eyes." data-accent="#9fe05a" data-accent2="#6fcf3f" aria-label="Game Boy theme" style="--swatch: #9fe05a"></button>
+              <button type="button" class="palette" data-theme="topaz" data-name="Topaz" data-desc="Luminous amber and topaz with a cool teal edge. Golden hour for your GPU farm." data-accent="#ffbf3f" data-accent2="#4fd8c8" aria-label="Topaz theme" style="--swatch: #ffbf3f"></button>
+              <button type="button" class="palette" data-theme="fluorite" data-name="Fluorite" data-desc="Hazard yellow and electric cyan. Loud, fast, and impossible to ignore." data-accent="#fff952" data-accent2="#3df3ff" aria-label="Fluorite theme" style="--swatch: #fff952"></button>
+              <button type="button" class="palette" data-theme="vaporwave" data-name="Vaporwave" data-desc="Hot pink and mall-cyan. A sunset that never quite loads." data-accent="#ff71ce" data-accent2="#01cdfe" aria-label="Vaporwave theme" style="--swatch: #ff71ce"></button>
+            </div>
+
+            <div class="theme-bg-picker">
+              <span class="theme-bg-label">Background</span>
+              <div class="theme-bg-modes" role="group" aria-label="Background mode">
+                <button type="button" class="theme-bg-btn active" data-bg="dotmatrix" data-label="Dot Matrix">Dot Matrix</button>
+                <button type="button" class="theme-bg-btn" data-bg="voronoi" data-label="Voronoi">Voronoi</button>
+                <button type="button" class="theme-bg-btn" data-bg="circuit" data-label="Circuit Board">Circuit Board</button>
+                <button type="button" class="theme-bg-btn" data-bg="hexmesh" data-label="Hex Mesh">Hex Mesh</button>
+                <button type="button" class="theme-bg-btn" data-bg="topography" data-label="Topography">Topography</button>
+                <button type="button" class="theme-bg-btn" data-bg="shapes" data-label="Floating Shapes">Floating Shapes</button>
+                <button type="button" class="theme-bg-btn" data-bg="starfield" data-label="Starfield">Starfield</button>
+                <button type="button" class="theme-bg-btn" data-bg="pointmap" data-label="Point Map">Point Map</button>
+                <button type="button" class="theme-bg-btn" data-bg="ribbons" data-label="Ribbons">Ribbons</button>
+              </div>
             </div>
           </div>
 
           <div class="theme-preview" id="theme-preview">
             <div class="preview-top">
               <span><i></i><i></i><i></i></span>
-              <em>theme preview</em>
+              <em>preview · <span id="preview-bg-name">Dot Matrix</span></em>
               <span class="preview-live">● live</span>
             </div>
             <div class="preview-body">
+              <canvas id="theme-bg" aria-hidden="true"></canvas>
               <div class="preview-side">
                 <span class="preview-logo"><img src="assets/logo.png" alt=""></span>
                 <span></span><span></span><span></span><span></span>

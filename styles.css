@@ -1315,3 +1315,46 @@ h1 {
   .site-nav a { padding-inline: 8px; font-size: 12.5px; }
   .release-chip { display: none; }
 }
+
+/* ------------------------------ theme background picker ------------------------------ */
+
+.theme-bg-picker { margin-top: 22px; }
+.theme-bg-label {
+  display: block;
+  margin-bottom: 9px;
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 8.5px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+.theme-bg-modes { display: flex; flex-wrap: wrap; gap: 5px; }
+.theme-bg-btn {
+  padding: 5px 9px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: rgba(255,255,255,.018);
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 8.5px;
+  cursor: pointer;
+  transition: color .15s, border-color .15s, background .15s;
+}
+.theme-bg-btn:hover { color: var(--text-2); border-color: var(--line-strong); }
+.theme-bg-btn.active {
+  color: var(--accent);
+  border-color: rgba(var(--accent-rgb), .48);
+  background: rgba(var(--accent-rgb), .10);
+}
+.preview-body { position: relative; overflow: hidden; }
+#theme-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  opacity: .72;
+  pointer-events: none;
+}
+.preview-side, .preview-main { position: relative; z-index: 1; }
+.preview-main > strong, .preview-kicker, .preview-metrics, .preview-chart, .preview-models { position: relative; z-index: 1; }
