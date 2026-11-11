@@ -1309,3 +1309,9 @@ h1 {
   .agent-intro { grid-template-columns: 1fr; }
   .agent-points { justify-content: flex-start; }
 }
+
+@media (max-width: 1180px) and (min-width: 761px) {
+  .site-nav { gap: 1px; }
+  .site-nav a { padding-inline: 8px; font-size: 12.5px; }
+  .release-chip { display: none; }
+}
