@@ -39,7 +39,7 @@
 
 .docs-layout {
   display: grid;
-  grid-template-columns: 220px minmax(0, 1fr) 170px;
+  grid-template-columns: 220px minmax(0, 1fr);
   gap: clamp(24px, 3.4vw, 42px);
   padding-block: 38px 76px;
   align-items: start;
@@ -140,6 +140,8 @@
   color: var(--text-2);
   font-size: 14.5px;
   line-height: 1.72;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 .markdown-body > *:first-child { margin-top: 0; }
 .markdown-body h1 {
@@ -189,14 +191,14 @@
   font-size: .84em;
 }
 .markdown-body pre {
+  max-width: 100%;
   margin: 18px 0 22px;
   padding: 17px 18px;
   border: 1px solid var(--line);
   border-radius: 10px;
   background: #080d16;
-  overflow-x: auto;
+  overflow-x: hidden;
   line-height: 1.65;
-  scrollbar-width: thin;
 }
 .markdown-body pre code {
   padding: 0;
@@ -204,21 +206,31 @@
   background: transparent;
   color: #c7d4e8;
   font-size: 11px;
-  white-space: pre;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  tab-size: 2;
 }
 .markdown-body hr { height: 1px; margin: 32px 0; border: 0; background: var(--line); }
 .markdown-body img { display: block; max-width: 100%; height: auto; margin: 20px 0; border: 1px solid var(--line); border-radius: 9px; }
 .markdown-body table {
-  display: block;
+  display: table;
   width: 100%;
   max-width: 100%;
   margin: 20px 0 24px;
   border-collapse: collapse;
-  overflow-x: auto;
+  table-layout: auto;
   font-size: 12px;
-  white-space: nowrap;
+  white-space: normal;
 }
-.markdown-body th, .markdown-body td { padding: 8px 11px; border: 1px solid var(--line); text-align: left; vertical-align: top; }
+.markdown-body th, .markdown-body td {
+  min-width: 0;
+  padding: 8px 11px;
+  border: 1px solid var(--line);
+  text-align: left;
+  vertical-align: top;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
 .markdown-body th { background: rgba(255,255,255,.035); color: var(--text); font-weight: 650; }
 .markdown-body tr:nth-child(even) td { background: rgba(255,255,255,.012); }
 .markdown-body details { margin: 17px 0; padding: 10px 13px; border: 1px solid var(--line); border-radius: 8px; background: rgba(255,255,255,.015); }
