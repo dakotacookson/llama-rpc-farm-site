@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Documentation — Llama RPC Farm</title>
+  <meta name="description" content="Llama RPC Farm documentation, pulled live from the main branch: setup, CLI, API, models, architecture, and more.">
+  <meta name="theme-color" content="#070a10">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/logo.png">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="docs.css">
+</head>
+<body class="docs-page">
+  <a class="skip-link" href="#docs-content">Skip to documentation</a>
+  <canvas id="dotfield" aria-hidden="true"></canvas>
+  <div class="cursor-glow" aria-hidden="true"></div>
+
+  <header class="site-header">
+    <div class="shell header-inner">
+      <a class="brand" href="index.html" aria-label="Llama RPC Farm home">
+        <span class="brand-mark"><img src="assets/logo.png" alt="" width="36" height="36"></span>
+        <span class="brand-name">Llama <em>RPC</em> Farm</span>
+      </a>
+      <nav class="site-nav" id="site-nav" aria-label="Primary">
+        <a href="index.html#platform">Platform</a>
+        <a href="index.html#features">Features</a>
+        <a href="index.html#themes">Themes</a>
+        <a href="index.html#install">Install</a>
+        <a href="index.html#cli">CLI</a>
+        <a href="docs.html" class="active" aria-current="page">Docs</a>
+      </nav>
+      <div class="header-actions">
+        <span class="release-chip" id="release-chip">Open source</span>
+        <a class="btn btn-ghost btn-sm" href="https://github.com/dakotacookson/Llama-RPC-Farm" target="_blank" rel="noreferrer">
+          <svg viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82A7.6 7.6 0 0 1 8 3.84c.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>
+          GitHub
+        </a>
+        <button class="nav-toggle" id="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Open navigation">
+          <span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="docs-bar">
+    <div class="shell docs-bar-inner">
+      <button class="docs-menu" id="docs-menu" type="button" aria-expanded="false" aria-controls="docs-sidebar">
+        <svg viewBox="0 0 16 16" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" d="M2.5 4h11M2.5 8h11M2.5 12h7"/></svg>
+        <span>Docs menu</span>
+      </button>
+      <nav class="docs-crumbs" aria-label="Breadcrumb">
+        <a href="index.html">Home</a><span>/</span><a href="docs.html">Docs</a><span>/</span><span id="doc-breadcrumb">Overview</span>
+      </nav>
+      <div class="docs-sync"><span class="docs-live"><i></i> Live from main</span><a id="doc-source-link" href="https://github.com/dakotacookson/Llama-RPC-Farm/tree/main/docs" target="_blank" rel="noreferrer">View source ↗</a></div>
+    </div>
+  </div>
+
+  <main class="shell docs-layout">
+    <aside class="docs-sidebar" id="docs-sidebar" aria-label="Documentation">
+      <label class="docs-search">
+        <svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="4.5" fill="none" stroke="currentColor" stroke-width="1.4"/><path fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" d="m10.5 10.5 3 3"/></svg>
+        <input id="docs-search" type="search" placeholder="Filter docs…" autocomplete="off" aria-label="Filter documentation">
+      </label>
+      <nav class="docs-nav" id="docs-nav">
+        <div class="docs-group">
+          <strong>Getting started</strong>
+          <a href="#README" data-doc="README">Overview</a>
+          <a href="#setup" data-doc="setup">Setup</a>
+          <a href="#configuration" data-doc="configuration">Configuration</a>
+          <a href="#faq" data-doc="faq">FAQ</a>
+        </div>
+        <div class="docs-group">
+          <strong>Using the farm</strong>
+          <a href="#cli" data-doc="cli">CLI</a>
+          <a href="#api" data-doc="api">API</a>
+          <a href="#models-and-variants" data-doc="models-and-variants">Models &amp; variants</a>
+          <a href="#examples" data-doc="examples">Examples</a>
+          <a href="#topologies" data-doc="topologies">Topologies</a>
+          <a href="#access" data-doc="access">Access &amp; keys</a>
+          <a href="#secrets" data-doc="secrets">Secrets</a>
+          <a href="#visualizer" data-doc="visualizer">Visualizer</a>
+        </div>
+        <div class="docs-group">
+          <strong>Under the hood</strong>
+          <a href="#architecture" data-doc="architecture">Architecture</a>
+          <a href="#peer-agent" data-doc="peer-agent">Peer agent</a>
+          <a href="#rpc-model" data-doc="rpc-model">RPC model</a>
+          <a href="#release" data-doc="release">Release process</a>
+          <a href="#cross-platform" data-doc="cross-platform">Cross-platform</a>
+          <a href="#testing" data-doc="testing">Testing</a>
+          <a href="#development" data-doc="development">Development</a>
+        </div>
+        <div class="docs-group">
+          <strong>Reference</strong>
+          <a href="#benchmarks" data-doc="benchmarks">Benchmarks</a>
+          <a href="#tuner" data-doc="tuner">Tuner</a>
+          <a href="#gpu-e2e" data-doc="gpu-e2e">GPU E2E</a>
+          <a href="#windows-signing" data-doc="windows-signing">Windows signing</a>
+        </div>
+      </nav>
+      <div class="docs-side-foot">
+        <span>Rendered live from <code>main</code>.</span>
+        <a href="https://github.com/dakotacookson/Llama-RPC-Farm/tree/main/docs" target="_blank" rel="noreferrer">Browse on GitHub ↗</a>
+      </div>
+    </aside>
+
+    <section class="docs-main">
+      <article class="docs-article" id="docs-content" aria-live="polite">
+        <div class="docs-loading">
+          <span class="docs-loading-dots"><i></i><i></i><i></i></span>
+          <strong>Pulling the latest docs…</strong>
+          <small>Reading directly from <code>main</code></small>
+        </div>
+      </article>
+      <aside class="docs-toc" aria-label="On this page">
+        <strong>On this page</strong>
+        <nav id="docs-toc"></nav>
+      </aside>
+    </section>
+  </main>
+
+  <footer class="site-footer docs-footer">
+    <div class="shell footer-bottom">
+      <span>© <span id="year">2026</span> Llama RPC Farm</span>
+      <span><a href="index.html">Back to the farm</a></span>
+    </div>
+  </footer>
+
+  <script src="assets/marked.min.js"></script>
+  <script src="main.js"></script>
+  <script src="docs.js"></script>
+</body>
+</html>

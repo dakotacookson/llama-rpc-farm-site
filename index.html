@@ -1,0 +1,535 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Llama RPC Farm — Your GPUs. One farm.</title>
+  <meta name="description" content="Turn spare GPUs, workstations, and gaming rigs into one coherent local AI cluster. Open source, self-hosted, and built for llama.cpp.">
+  <meta name="theme-color" content="#070a10">
+  <meta property="og:title" content="Llama RPC Farm — Your GPUs. One farm.">
+  <meta property="og:description" content="A self-hosted control plane for distributed llama.cpp inference across every machine you own.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="assets/logo.png">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/logo.png">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <canvas id="dotfield" aria-hidden="true"></canvas>
+  <div class="cursor-glow" aria-hidden="true"></div>
+
+  <header class="site-header">
+    <div class="shell header-inner">
+      <a class="brand" href="#top" aria-label="Llama RPC Farm home">
+        <span class="brand-mark"><img src="assets/logo.png" alt="" width="36" height="36"></span>
+        <span class="brand-name">Llama <em>RPC</em> Farm</span>
+      </a>
+
+      <nav class="site-nav" id="site-nav" aria-label="Primary">
+        <a href="#platform">Platform</a>
+        <a href="#features">Features</a>
+        <a href="#themes">Themes</a>
+        <a href="#install">Install</a>
+        <a href="#cli">CLI</a>
+        <a href="docs.html">Docs</a>
+      </nav>
+
+      <div class="header-actions">
+        <span class="release-chip" id="release-chip">Open source</span>
+        <a class="btn btn-ghost btn-sm" href="https://github.com/dakotacookson/Llama-RPC-Farm" target="_blank" rel="noreferrer">
+          <svg viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82A7.6 7.6 0 0 1 8 3.84c.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>
+          GitHub
+        </a>
+        <button class="nav-toggle" id="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Open navigation">
+          <span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero shell" id="top">
+      <div class="hero-copy">
+        <p class="eyebrow reveal"><span class="live-dot"></span> Distributed inference for hardware you own</p>
+        <h1 class="reveal">Your GPUs.<br><span class="gradient-text">One farm.</span></h1>
+        <p class="lede reveal">Turn spare gaming rigs, workstations, and Linux boxes into one coherent local AI cluster. One dashboard. One API. Every model served by the hardware you already have.</p>
+        <div class="hero-actions reveal">
+          <a class="btn btn-primary" href="#install">Get started
+            <svg viewBox="0 0 16 16" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M3 8h9M8.5 3.5 13 8l-4.5 4.5"/></svg>
+          </a>
+          <a class="btn btn-ghost" href="https://github.com/dakotacookson/Llama-RPC-Farm" target="_blank" rel="noreferrer">Explore the source</a>
+        </div>
+        <dl class="hero-proof reveal">
+          <div><dt>Control planes</dt><dd>One</dd></div>
+          <div><dt>Machines</dt><dd>As many as you have</dd></div>
+          <div><dt>License</dt><dd>Apache 2.0</dd></div>
+        </dl>
+      </div>
+
+      <div class="hero-visual reveal" aria-label="Preview of the Llama RPC Farm dashboard">
+        <div class="window-glow"></div>
+        <div class="app-window">
+          <div class="window-bar">
+            <span class="window-dots"><i></i><i></i><i></i></span>
+            <span class="window-title">farm://overview</span>
+            <span class="window-live"><i></i> live</span>
+          </div>
+          <div class="app-body">
+            <aside class="app-rail" aria-hidden="true">
+              <span class="rail-logo"><img src="assets/logo.png" alt=""></span>
+              <span class="rail-item active"></span>
+              <span class="rail-item"></span>
+              <span class="rail-item"></span>
+              <span class="rail-item"></span>
+              <span class="rail-spacer"></span>
+              <span class="rail-item small"></span>
+            </aside>
+            <div class="app-main">
+              <div class="app-head">
+                <div>
+                  <span class="app-kicker">Cluster overview</span>
+                  <strong>Everything, at a glance</strong>
+                </div>
+                <span class="status-pill"><i></i> 4 nodes online</span>
+              </div>
+
+              <div class="metric-row">
+                <div class="metric-card">
+                  <span class="metric-label">VRAM</span>
+                  <strong>186<span>/ 256 GB</span></strong>
+                  <div class="mini-bar"><i style="--w: 73%"></i></div>
+                </div>
+                <div class="metric-card">
+                  <span class="metric-label">RAM</span>
+                  <strong>312<span>/ 512 GB</span></strong>
+                  <div class="mini-bar"><i style="--w: 61%"></i></div>
+                </div>
+                <div class="metric-card">
+                  <span class="metric-label">CPU</span>
+                  <strong>34<span>%</span></strong>
+                  <div class="mini-bar"><i style="--w: 34%"></i></div>
+                </div>
+              </div>
+
+              <div class="node-grid">
+                <article class="node-card">
+                  <div class="node-top"><span class="node-dot on"></span><strong>aibox-01</strong><span class="node-tag">master</span></div>
+                  <div class="node-specs"><span>2× RTX 4090</span><span>48 GB</span></div>
+                  <div class="gpu-list">
+                    <div class="gpu-row"><span>GPU 0</span><div class="gpu-bar"><i style="--w: 81%"></i></div><em>81%</em></div>
+                    <div class="gpu-row"><span>GPU 1</span><div class="gpu-bar"><i style="--w: 67%"></i></div><em>67%</em></div>
+                  </div>
+                  <div class="model-chip"><i></i> qwen3-32b · streaming</div>
+                </article>
+                <article class="node-card">
+                  <div class="node-top"><span class="node-dot on"></span><strong>aibox-02</strong><span class="node-tag">worker</span></div>
+                  <div class="node-specs"><span>RTX 3090</span><span>24 GB</span></div>
+                  <div class="gpu-list">
+                    <div class="gpu-row"><span>GPU 0</span><div class="gpu-bar"><i style="--w: 54%"></i></div><em>54%</em></div>
+                  </div>
+                  <div class="model-chip idle"><i></i> ready for work</div>
+                </article>
+                <article class="node-card">
+                  <div class="node-top"><span class="node-dot on"></span><strong>aibox-03</strong><span class="node-tag">worker</span></div>
+                  <div class="node-specs"><span>RTX 4080</span><span>16 GB</span></div>
+                  <div class="gpu-list">
+                    <div class="gpu-row"><span>GPU 0</span><div class="gpu-bar"><i style="--w: 42%"></i></div><em>42%</em></div>
+                  </div>
+                  <div class="model-chip idle"><i></i> ready for work</div>
+                </article>
+                <article class="node-card">
+                  <div class="node-top"><span class="node-dot on"></span><strong>aibox-04</strong><span class="node-tag">worker</span></div>
+                  <div class="node-specs"><span>2× RTX 3060</span><span>24 GB</span></div>
+                  <div class="gpu-list">
+                    <div class="gpu-row"><span>GPU 0</span><div class="gpu-bar"><i style="--w: 63%"></i></div><em>63%</em></div>
+                    <div class="gpu-row"><span>GPU 1</span><div class="gpu-bar"><i style="--w: 58%"></i></div><em>58%</em></div>
+                  </div>
+                  <div class="model-chip"><i></i> llama-3.3-70b · warm</div>
+                </article>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="float-note note-one"><span class="float-icon">↗</span><span><strong>OpenAI-compatible</strong><small>/v1/chat/completions</small></span></div>
+        <div class="float-note note-two"><span class="float-icon">◈</span><span><strong>Live telemetry</strong><small>streamed per machine</small></span></div>
+      </div>
+    </section>
+
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee-track">
+        <span>llama.cpp</span><i></i><span>RPC backends</span><i></i><span>llama-swap</span><i></i><span>OpenAI-compatible API</span><i></i>
+        <span>Live stats</span><i></i><span>Scoped access keys</span><i></i><span>Cross-platform</span><i></i><span>Dot matrix</span><i></i>
+        <span>llama.cpp</span><i></i><span>RPC backends</span><i></i><span>llama-swap</span><i></i><span>OpenAI-compatible API</span><i></i>
+        <span>Live stats</span><i></i><span>Scoped access keys</span><i></i><span>Cross-platform</span><i></i><span>Dot matrix</span><i></i>
+      </div>
+    </div>
+
+    <section class="section shell" id="platform">
+      <div class="section-intro reveal">
+        <p class="eyebrow"><span class="eyebrow-index">01</span> One control plane</p>
+        <h2>Every box in the room,<br>working as one.</h2>
+        <p>Llama RPC Farm sits above the mess: mixed GPUs, mixed operating systems, models spread across machines. You get one place to see it, route it, and serve it.</p>
+      </div>
+
+      <div class="architecture reveal">
+        <div class="arch-column arch-machines">
+          <span class="arch-label">Your hardware</span>
+          <div class="arch-node"><span class="node-dot on"></span><span><strong>workstation</strong><small>2× RTX 4090 · 48 GB</small></span></div>
+          <div class="arch-node"><span class="node-dot on"></span><span><strong>gaming rig</strong><small>RTX 3090 · 24 GB</small></span></div>
+          <div class="arch-node"><span class="node-dot idle"></span><span><strong>spare tower</strong><small>2× RTX 3060 · 24 GB</small></span></div>
+          <div class="arch-node"><span class="node-dot on"></span><span><strong>linux box</strong><small>RX 7900 XTX · 24 GB</small></span></div>
+        </div>
+
+        <div class="arch-core">
+          <span class="arch-core-ring ring-one"></span>
+          <span class="arch-core-ring ring-two"></span>
+          <div class="arch-core-card">
+            <span class="core-mark"><img src="assets/logo.png" alt=""></span>
+            <strong>Llama RPC Farm</strong>
+            <small>one dashboard · one API</small>
+            <span class="core-status"><i></i> cluster healthy</span>
+          </div>
+          <span class="core-packet p1"></span>
+          <span class="core-packet p2"></span>
+          <span class="core-packet p3"></span>
+        </div>
+
+        <div class="arch-column arch-models">
+          <span class="arch-label">Served models</span>
+          <div class="arch-model"><span class="model-dot"></span><span><strong>qwen3-32b</strong><small>chat · streaming</small></span><em>GPU 0+1</em></div>
+          <div class="arch-model"><span class="model-dot"></span><span><strong>llama-3.3-70b</strong><small>chat · warm</small></span><em>split</em></div>
+          <div class="arch-model"><span class="model-dot alt"></span><span><strong>whisper-large</strong><small>audio · idle</small></span><em>GPU 2</em></div>
+          <div class="arch-model"><span class="model-dot alt"></span><span><strong>embeddinggemma</strong><small>embeddings · on demand</small></span><em>auto</em></div>
+        </div>
+      </div>
+
+      <div class="platform-points reveal">
+        <div><span>01</span><strong>Discover</strong><p>Find every agent, GPU, and loaded model across the farm.</p></div>
+        <div><span>02</span><strong>Route</strong><p>Place models where they fit. Split, shard, or keep them local.</p></div>
+        <div><span>03</span><strong>Serve</strong><p>Expose one stable, OpenAI-compatible endpoint to your tools.</p></div>
+        <div><span>04</span><strong>Watch</strong><p>Stream live VRAM, RAM, CPU, and model activity as it happens.</p></div>
+      </div>
+    </section>
+
+    <section class="section shell" id="features">
+      <div class="section-intro reveal">
+        <p class="eyebrow"><span class="eyebrow-index">02</span> Built for real rigs</p>
+        <h2>Serious infrastructure.<br>Not a science project.</h2>
+        <p>Every surface is designed to make a heterogeneous pile of hardware feel like one deliberate machine.</p>
+      </div>
+
+      <div class="bento">
+        <article class="feature feature-wide reveal">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" d="M4 7h16M4 12h10M4 17h7"/><circle cx="19" cy="12" r="2" fill="currentColor"/><circle cx="14" cy="17" r="2" fill="currentColor"/></svg>
+          </div>
+          <div>
+            <h3>One API. Every machine.</h3>
+            <p>Route chat, embeddings, and completions through one OpenAI-compatible surface. llama-swap decides which model wakes up and where it lives.</p>
+          </div>
+          <div class="api-lines" aria-hidden="true">
+            <span>POST /v1/chat/completions</span><span>POST /v1/embeddings</span><span>GET /v1/models</span>
+          </div>
+        </article>
+
+        <article class="feature feature-tall reveal">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" d="M3 17l5-6 4 4 3-5 6 7"/><path fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" d="M3 21h18"/></svg>
+          </div>
+          <h3>Live telemetry, not a stale chart</h3>
+          <p>Per-machine stats arrive as an NDJSON stream. Cards update the moment a host answers, so one slow box never freezes the rest of the farm.</p>
+          <div class="spark-strip" aria-hidden="true">
+            <i style="--h: 34%"></i><i style="--h: 52%"></i><i style="--h: 41%"></i><i style="--h: 78%"></i><i style="--h: 63%"></i><i style="--h: 88%"></i><i style="--h: 72%"></i><i style="--h: 94%"></i><i style="--h: 67%"></i><i style="--h: 82%"></i><i style="--h: 59%"></i><i style="--h: 91%"></i>
+          </div>
+        </article>
+
+        <article class="feature reveal">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="6" height="6" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.5"/><rect x="14" y="4" width="6" height="6" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.5"/><rect x="4" y="14" width="6" height="6" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.5"/><rect x="14" y="14" width="6" height="6" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+          </div>
+          <h3>RPC without the ritual</h3>
+          <p>Agents, binaries, builds, and launch configs are handled for you. CUDA, ROCm, Vulkan, and mixed vendors are all first-class citizens.</p>
+        </article>
+
+        <article class="feature reveal">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" d="M12 3l7 3v5c0 5-3 8-7 10-4-2-7-5-7-10V6l7-3Z"/><path fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" d="m9 12 2 2 4-5"/></svg>
+          </div>
+          <h3>Access that follows the user</h3>
+          <p>Scoped API keys, web logins, per-key model visibility, and per-user themes. The right person sees the right models — and their own dashboard.</p>
+        </article>
+
+        <article class="feature feature-wide feature-visual reveal">
+          <div>
+            <p class="eyebrow small">A dashboard with a pulse</p>
+            <h3>Dot matrix. Voronoi. Circuit boards.<br>Floating wireframes.</h3>
+            <p>Twenty background modes and dozens of color themes — from gemstone geology to famous sites, shows, books, and retro hardware. It should feel good to stare at.</p>
+          </div>
+          <div class="mode-cloud" aria-hidden="true">
+            <span class="mode-chip active">Dot Matrix</span>
+            <span class="mode-chip">Voronoi</span>
+            <span class="mode-chip">Circuit Board</span>
+            <span class="mode-chip">Hex Mesh</span>
+            <span class="mode-chip">Topography</span>
+            <span class="mode-chip">Floating Shapes</span>
+            <span class="mode-chip">Starfield</span>
+            <span class="mode-chip">Point Map</span>
+          </div>
+        </article>
+
+        <article class="feature reveal">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" d="m7 9 3 3-3 3M13 15h4"/></svg>
+          </div>
+          <h3>CLI when you want it</h3>
+          <p><code>farmctl</code> speaks the same API as the dashboard. Script status checks, warm a model, or snapshot the farm for support without opening a browser.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section shell" id="themes">
+      <div class="section-intro reveal">
+        <p class="eyebrow"><span class="eyebrow-index">03</span> Make it yours</p>
+        <h2>A farm with taste.</h2>
+        <p>Pick a palette, tune the glow, choose a background. Your theme travels with your access key, not the browser.</p>
+      </div>
+
+      <div class="theme-lab reveal">
+        <div class="theme-controls">
+          <div class="theme-copy">
+            <span class="theme-kicker">Theme studio</span>
+            <h3 id="theme-name">Obsidian</h3>
+            <p id="theme-desc">Volcanic black, iridescent violet, and molten copper. Built for late-night tinkering.</p>
+            <div class="theme-palette" id="theme-palette" aria-label="Theme palettes">
+              <button type="button" class="palette active" data-theme="obsidian" data-name="Obsidian" data-desc="Volcanic black, iridescent violet, and molten copper. Built for late-night tinkering." data-accent="#b7a4ff" data-accent2="#a855f7" aria-label="Obsidian theme" style="--swatch: #b7a4ff"></button>
+              <button type="button" class="palette" data-theme="sapphire" data-name="Sapphire" data-desc="Royal blue, sapphire light, and a thin gold ribbon. Deep, calm, and precise." data-accent="#4f9bff" data-accent2="#f5c76a" aria-label="Sapphire theme" style="--swatch: #4f9bff"></button>
+              <button type="button" class="palette" data-theme="larimar" data-name="Larimar" data-desc="Bioluminescent ocean teal with a warm gold edge. Quietly alive." data-accent="#6ff0ff" data-accent2="#f5c76a" aria-label="Larimar theme" style="--swatch: #6ff0ff"></button>
+              <button type="button" class="palette" data-theme="ruby" data-name="Ruby" data-desc="Crimson glass and polished gold. For when the farm should feel like it means business." data-accent="#ff3f4b" data-accent2="#f5c76a" aria-label="Ruby theme" style="--swatch: #ff3f4b"></button>
+              <button type="button" class="palette" data-theme="dune" data-name="Dune" data-desc="Spice orange over deep desert navy. A little sci-fi, a little sandstorm." data-accent="#ff9a4d" data-accent2="#6aa9ff" aria-label="Dune theme" style="--swatch: #ff9a4d"></button>
+            </div>
+          </div>
+
+          <div class="theme-preview" id="theme-preview">
+            <div class="preview-top">
+              <span><i></i><i></i><i></i></span>
+              <em>theme preview</em>
+              <span class="preview-live">● live</span>
+            </div>
+            <div class="preview-body">
+              <div class="preview-side">
+                <span class="preview-logo"><img src="assets/logo.png" alt=""></span>
+                <span></span><span></span><span></span><span></span>
+              </div>
+              <div class="preview-main">
+                <span class="preview-kicker">Cluster overview</span>
+                <strong>Good evening.</strong>
+                <div class="preview-metrics">
+                  <div><small>VRAM</small><b>186 GB</b><i style="--w: 73%"></i></div>
+                  <div><small>RAM</small><b>312 GB</b><i style="--w: 61%"></i></div>
+                  <div><small>CPU</small><b>34%</b><i style="--w: 34%"></i></div>
+                </div>
+                <div class="preview-chart"><i style="--h: 30%"></i><i style="--h: 44%"></i><i style="--h: 38%"></i><i style="--h: 62%"></i><i style="--h: 51%"></i><i style="--h: 74%"></i><i style="--h: 58%"></i><i style="--h: 85%"></i><i style="--h: 69%"></i><i style="--h: 92%"></i><i style="--h: 76%"></i><i style="--h: 88%"></i></div>
+                <div class="preview-models">
+                  <span><i></i> qwen3-32b <em>streaming</em></span>
+                  <span><i></i> llama-3.3-70b <em>warm</em></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section shell" id="install">
+      <div class="section-intro install-intro reveal">
+        <p class="eyebrow"><span class="eyebrow-index">04</span> Download</p>
+        <h2>Run it locally.<br>Choose your platform.</h2>
+        <p>Grab a release for your OS, or use the one-line installer. Every build and source wheel comes straight from the latest GitHub release.</p>
+        <div class="install-version">
+          <span><i class="live-dot"></i> <span id="release-version">latest release</span></span>
+          <a href="https://github.com/dakotacookson/Llama-RPC-Farm/releases" target="_blank" rel="noreferrer">Release notes <span>↗</span></a>
+        </div>
+      </div>
+
+      <div class="download-grid reveal">
+        <article class="download-card" data-os="windows">
+          <span class="download-recommend">Recommended</span>
+          <div class="download-head">
+            <span class="os-icon">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M3 5.7 10.4 4.6v6.9H3V5.7Zm8.6-1.3L21 3v8.5h-9.4V4.4ZM3 12.5h7.4v6.9L3 18.3v-5.8Zm8.6 0H21V21l-9.4-1.3v-7.2Z"/></svg>
+            </span>
+            <span class="download-tag">.exe</span>
+          </div>
+          <h3>Windows</h3>
+          <p>Windows 10/11 · x64</p>
+          <a class="btn btn-primary download-btn" data-download="windows" href="https://github.com/dakotacookson/Llama-RPC-Farm/releases" target="_blank" rel="noreferrer">Download installer</a>
+          <span class="download-meta" data-size="windows">latest release</span>
+        </article>
+
+        <article class="download-card" data-os="macos">
+          <span class="download-recommend">Recommended</span>
+          <div class="download-head">
+            <span class="os-icon">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M16.5 12.7c0-2.2 1.8-3.3 1.9-3.4-1-1.5-2.6-1.7-3.2-1.7-1.4-.1-2.7.8-3.4.8-.7 0-1.8-.8-2.9-.8-1.5 0-2.9.9-3.7 2.3-1.6 2.7-.4 6.8 1.1 9 .8 1.1 1.7 2.3 2.9 2.3 1.2 0 1.6-.8 3.1-.8 1.5 0 1.9.8 3.1.8 1.3 0 2.1-1.1 2.9-2.2.9-1.3 1.3-2.6 1.3-2.7-.1 0-3.1-1.2-3.1-3.6ZM14.3 5.9c.7-.9 1.2-2.1 1.1-3.3-1 .1-2.2.7-2.9 1.5-.6.7-1.2 2-1.1 3.1 1.1.1 2.2-.5 2.9-1.3Z"/></svg>
+            </span>
+            <span class="download-tag">.pkg</span>
+          </div>
+          <h3>macOS</h3>
+          <p>Apple Silicon · arm64</p>
+          <a class="btn btn-primary download-btn" data-download="macos" href="https://github.com/dakotacookson/Llama-RPC-Farm/releases" target="_blank" rel="noreferrer">Download package</a>
+          <span class="download-meta" data-size="macos">latest release</span>
+        </article>
+
+        <article class="download-card" data-os="linux">
+          <span class="download-recommend">Recommended</span>
+          <div class="download-head">
+            <span class="os-icon">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2c-2.2 0-3.7 1.8-3.6 4.3.1 1.5-.3 2.5-1.2 4.1-.8 1.4-1.7 2.8-1.7 4.8 0 1.1.4 2 1.2 2.7-1 .5-1.7 1.4-1.7 2.5 0 .9.7 1.6 1.7 1.6h10.6c1 0 1.7-.7 1.7-1.6 0-1.1-.7-2-1.7-2.5.8-.7 1.2-1.6 1.2-2.7 0-2-.9-3.4-1.7-4.8-.9-1.6-1.3-2.6-1.2-4.1C15.7 3.8 14.2 2 12 2Zm-1.6 4.2c.4 0 .7.5.7 1.1s-.3 1.1-.7 1.1-.7-.5-.7-1.1.3-1.1.7-1.1Zm3.2 0c.4 0 .7.5.7 1.1s-.3 1.1-.7 1.1-.7-.5-.7-1.1.3-1.1.7-1.1Zm-1.6 2.1c.6 0 1.8.9 1.8 1.5 0 .4-.8.9-1.8.9s-1.8-.5-1.8-.9c0-.6 1.2-1.5 1.8-1.5Z"/></svg>
+            </span>
+            <span class="download-tag">.deb</span>
+          </div>
+          <h3>Linux</h3>
+          <p>Ubuntu / Debian · x64</p>
+          <a class="btn btn-primary download-btn" data-download="linux" href="https://github.com/dakotacookson/Llama-RPC-Farm/releases" target="_blank" rel="noreferrer">Download .deb</a>
+          <span class="download-meta" data-size="linux">latest release</span>
+        </article>
+
+        <article class="download-card download-card-source" data-os="source">
+          <div class="download-head">
+            <span class="os-icon">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" d="m8 8-4 4 4 4M16 8l4 4-4 4M14 4l-4 16"/></svg>
+            </span>
+            <span class="download-tag">.whl</span>
+          </div>
+          <h3>Source wheel</h3>
+          <p>Any OS · Python 3.11+</p>
+          <a class="btn btn-ghost download-btn" data-download="source" href="https://github.com/dakotacookson/Llama-RPC-Farm/releases" target="_blank" rel="noreferrer">Download wheel</a>
+          <span class="download-meta" data-size="source">latest release</span>
+        </article>
+      </div>
+
+      <div class="install-lower reveal">
+        <div class="oneline-card">
+          <div class="oneline-head">
+            <span class="oneline-title"><i></i> One-line install</span>
+            <span class="oneline-os">Linux / macOS</span>
+          </div>
+          <div class="oneline-row">
+            <code id="oneline-code">curl -fsSL https://raw.githubusercontent.com/dakotacookson/Llama-RPC-Farm/main/scripts/install-remote.sh | bash</code>
+            <button type="button" class="copy-btn" data-copy-target="oneline-code">
+              <svg viewBox="0 0 16 16" aria-hidden="true"><rect x="5" y="5" width="8" height="8" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.3"/><path fill="none" stroke="currentColor" stroke-width="1.3" d="M3 10.5V4a1 1 0 0 1 1-1h6.5"/></svg>
+              <span>Copy</span>
+            </button>
+          </div>
+          <p class="oneline-note">Clones to <code>~/Llama-RPC-Farm</code>, installs everything, and puts <code>farmctl</code> on your PATH.</p>
+        </div>
+
+        <div class="install-after">
+          <div><span>01</span><strong>Install</strong><p>Use an installer or the source wheel. No admin account required for a local source install.</p></div>
+          <div><span>02</span><strong>Add machines</strong><p>Discover peers and let the app provision the lightweight agent.</p></div>
+          <div><span>03</span><strong>Open the farm</strong><p>Visit <code>http://127.0.0.1:8199</code> and load your first model.</p></div>
+        </div>
+      </div>
+
+      <div class="install-foot reveal">
+        <a class="text-link" href="https://github.com/dakotacookson/Llama-RPC-Farm/releases" target="_blank" rel="noreferrer">All releases and checksums <span>↗</span></a>
+        <a class="text-link" href="docs.html#setup">Setup guide <span>↗</span></a>
+      </div>
+    </section>
+
+    <section class="section shell" id="cli">
+      <div class="section-intro reveal">
+        <p class="eyebrow"><span class="eyebrow-index">05</span> Headless by default</p>
+        <h2>The dashboard is optional.</h2>
+        <p><code>farmctl</code> is a first-class client over the same API. Perfect for scripts, cron jobs, remote shells, and the terminal you already live in.</p>
+      </div>
+
+      <div class="cli-grid">
+        <div class="cli-commands reveal">
+          <div class="cli-command"><code>farmctl status</code><span>cluster + llama-swap status</span></div>
+          <div class="cli-command"><code>farmctl models</code><span>configured models and variants</span></div>
+          <div class="cli-command"><code>farmctl start</code><span>start the daemon, no warmup</span></div>
+          <div class="cli-command"><code>farmctl launch --model ID</code><span>warm one model</span></div>
+          <div class="cli-command"><code>farmctl unload ID</code><span>free its VRAM / RAM</span></div>
+          <div class="cli-command"><code>farmctl doctor</code><span>readiness checklist</span></div>
+        </div>
+        <div class="cli-terminal reveal">
+          <div class="terminal-top">
+            <span class="window-title">zazi@farm ~</span>
+            <span class="window-live"><i></i> connected</span>
+          </div>
+          <pre class="terminal-code terminal-code-small"><code><span class="prompt">$</span> farmctl status
+<span class="out-dim">cluster</span>     <span class="out-good">4 nodes online</span>
+<span class="out-dim">llama-swap</span>  <span class="out-good">up · 127.0.0.1:8080</span>
+<span class="out-dim">models</span>      <span class="out-accent">2 loaded</span> / 14 configured
+<span class="out-dim">vram</span>        186 GB used / 256 GB
+<span class="prompt">$</span> farmctl launch --model qwen3-32b
+<span class="out-good">✓</span> qwen3-32b loaded on aibox-01 <span class="out-dim">(18.4s)</span>
+<span class="prompt">$</span> <span class="caret"></span></code></pre>
+        </div>
+      </div>
+      <div class="cli-links reveal">
+        <a class="text-link" href="https://github.com/dakotacookson/Llama-RPC-Farm/blob/main/docs/cli.md" target="_blank" rel="noreferrer">CLI reference <span>↗</span></a>
+        <a class="text-link" href="https://github.com/dakotacookson/Llama-RPC-Farm/blob/main/docs/api.md" target="_blank" rel="noreferrer">API reference <span>↗</span></a>
+      </div>
+    </section>
+
+    <section class="section shell">
+      <div class="final-cta reveal">
+        <div class="cta-orbit" aria-hidden="true"><span></span><span></span><span></span></div>
+        <p class="eyebrow"><span class="live-dot"></span> Your hardware is already enough</p>
+        <h2>Stop renting compute.<br>Start farming it.</h2>
+        <p>Open source, Apache 2.0, and built to run on the machines you already own.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="https://github.com/dakotacookson/Llama-RPC-Farm" target="_blank" rel="noreferrer">Star on GitHub
+            <svg viewBox="0 0 16 16" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M3 8h9M8.5 3.5 13 8l-4.5 4.5"/></svg>
+          </a>
+          <a class="btn btn-ghost" href="https://github.com/dakotacookson/Llama-RPC-Farm/blob/main/docs/setup.md" target="_blank" rel="noreferrer">Setup guide</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="shell footer-inner">
+      <div class="footer-brand">
+        <a class="brand" href="#top">
+          <span class="brand-mark"><img src="assets/logo.png" alt="" width="36" height="36"></span>
+          <span class="brand-name">Llama <em>RPC</em> Farm</span>
+        </a>
+        <p>Local AI infrastructure for people with more GPUs than cloud budget.</p>
+        <span class="footer-badge">Apache 2.0 · self-hosted</span>
+      </div>
+      <div class="footer-cols">
+        <div>
+          <strong>Product</strong>
+          <a href="#platform">Platform</a>
+          <a href="#features">Features</a>
+          <a href="#themes">Themes</a>
+          <a href="#install">Install</a>
+        </div>
+        <div>
+          <strong>Resources</strong>
+          <a href="docs.html">Documentation</a>
+          <a href="https://github.com/dakotacookson/Llama-RPC-Farm/blob/main/docs/cli.md" target="_blank" rel="noreferrer">CLI</a>
+          <a href="https://github.com/dakotacookson/Llama-RPC-Farm/blob/main/docs/api.md" target="_blank" rel="noreferrer">API</a>
+          <a href="https://github.com/dakotacookson/Llama-RPC-Farm/releases" target="_blank" rel="noreferrer">Releases</a>
+        </div>
+        <div>
+          <strong>Community</strong>
+          <a href="https://github.com/dakotacookson/Llama-RPC-Farm" target="_blank" rel="noreferrer">GitHub</a>
+          <a href="https://github.com/dakotacookson/Llama-RPC-Farm/issues" target="_blank" rel="noreferrer">Issues</a>
+          <a href="https://github.com/dakotacookson/Llama-RPC-Farm/blob/main/LICENSE" target="_blank" rel="noreferrer">License</a>
+        </div>
+      </div>
+    </div>
+    <div class="shell footer-bottom">
+      <span>© <span id="year">2026</span> Llama RPC Farm</span>
+      <span>Built for the machines you already have.</span>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>

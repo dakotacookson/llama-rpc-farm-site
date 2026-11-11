@@ -1,0 +1,3 @@
+marked
+Copyright (c) 2011-2025, Christopher Jeffrey
+MIT License — https://github.com/markedjs/marked
