@@ -991,6 +991,8 @@ function floatShape(kind) {
   const releaseChip = $("#release-chip");
   const releaseVersion = $("#release-version");
   const downloadCards = $$(".download-card");
+  const RELEASES_API =
+    "https://api.github.com/repos/dakotacookson/Llama-RPC-Farm/releases?per_page=20";
 
   function formatBytes(bytes) {
     if (!Number.isFinite(bytes) || bytes <= 0) return "";
@@ -1048,6 +1050,31 @@ function floatShape(kind) {
     });
   }
 
+  function newestBuild(releases) {
+    if (!Array.isArray(releases)) return null;
+    return releases
+      .filter((r) => r && !r.draft)
+      .filter((r) => /^release-\d/.test(r.tag_name || ""))
+      .filter((r) => Array.isArray(r.assets) && r.assets.length)
+      .sort((a, b) =>
+        new Date(b.published_at || b.created_at || 0) -
+        new Date(a.published_at || a.created_at || 0)
+      )[0] || null;
+  }
+
+  async function refreshRelease() {
+    try {
+      const res = await fetch(RELEASES_API, {
+        headers: { Accept: "application/vnd.github+json" },
+        cache: "no-store",
+      });
+      if (!res.ok) return;
+      paintRelease(newestBuild(await res.json()));
+    } catch (_) {
+      /* keep the current release / release-page links */
+    }
+  }
+
   if (releaseChip || downloadCards.length) {
     const detected = detectOS();
     if (detected) {
@@ -1055,11 +1082,9 @@ function floatShape(kind) {
         card.classList.toggle("recommended", card.dataset.os === detected);
       });
     }
-    fetch("https://api.github.com/repos/dakotacookson/Llama-RPC-Farm/releases?per_page=1", {
-      headers: { Accept: "application/vnd.github+json" },
-    }).then((r) => r.ok ? r.json() : null).then((releases) => {
-      paintRelease(Array.isArray(releases) ? releases[0] : null);
-    }).catch(() => {});
+    refreshRelease();
+    /* Keep an open page current when a new rolling build is published. */
+    setInterval(refreshRelease, 10 * 60 * 1000);
   }
 
   /* ------------------------------------------------------------ */
