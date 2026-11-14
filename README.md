@@ -4,7 +4,7 @@ The static marketing site for [Llama RPC Farm](https://github.com/dakotacookson/
 
 - No backend, no build step, no framework.
 - Plain `index.html`, `styles.css`, and `main.js`.
-- Animated dot-matrix backdrop, responsive layout, theme studio, farm + peer-agent downloads, and CLI showcase.
+- Animated dot-matrix backdrop, responsive layout, theme studio, farm + peer-agent downloads (Linux x64/arm64 incl. Raspberry Pi), and CLI showcase.
 - Downloads resolve from the latest GitHub release at runtime and refresh every 10 minutes; the `main-latest` pointer release is ignored so asset-less releases never win.
 - Farm and agent one-line installers support Linux/macOS and Windows PowerShell.
 - `docs.html` pulls Markdown directly from the main branch and renders it in the site’s own reading layout.

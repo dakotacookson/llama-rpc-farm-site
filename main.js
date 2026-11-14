@@ -1017,10 +1017,12 @@ function floatShape(kind) {
       if (kind === "windows") return n.startsWith("llama-rpc-farm") && n.includes("windows") && n.endsWith("setup.exe");
       if (kind === "macos") return n.startsWith("llama-rpc-farm_") && n.endsWith(".pkg");
       if (kind === "linux") return n.startsWith("llama-rpc-farm_") && n.endsWith("_amd64.deb");
+      if (kind === "linux-arm64") return n.startsWith("llama-rpc-farm_") && n.endsWith("_arm64.deb");
       if (kind === "source") return n.startsWith("llama_rpc_farm-") && n.endsWith(".whl");
       if (kind === "agent-windows") return n.startsWith("llama-peer-agent") && n.includes("windows") && n.endsWith("setup.exe");
       if (kind === "agent-macos") return n.startsWith("llama-peer-agent_") && n.endsWith(".pkg");
       if (kind === "agent-linux") return n.startsWith("llama-rpc-farm-agent_") && n.endsWith("_amd64.deb");
+      if (kind === "agent-linux-arm64") return n.startsWith("llama-rpc-farm-agent_") && n.endsWith("_arm64.deb");
       if (kind === "agent-source") return n.startsWith("llama_rpc_farm_agent-") && n.endsWith(".whl");
       return false;
     });
@@ -1075,6 +1077,26 @@ function floatShape(kind) {
     }
   }
 
+  async function refineArm64() {
+    try {
+      const uaData = navigator.userAgentData;
+      if (!uaData || !uaData.getHighEntropyValues) return;
+      const v = await uaData.getHighEntropyValues(["architecture"]);
+      const arch = String(v.architecture || "").toLowerCase();
+      if (!/^(arm|arm64|aarch64)$/.test(arch)) return;
+      downloadCards.forEach((card) => {
+        const os = card.dataset.os || "";
+        if (os === "linux-arm64" || os === "agent-linux-arm64") {
+          card.classList.add("recommended");
+        } else if (os === "linux" || os === "agent-linux") {
+          card.classList.remove("recommended");
+        }
+      });
+    } catch (_) {
+      /* high-entropy client hints are optional */
+    }
+  }
+
   if (releaseChip || downloadCards.length) {
     const detected = detectOS();
     if (detected) {
@@ -1082,6 +1104,7 @@ function floatShape(kind) {
         card.classList.toggle("recommended", card.dataset.os === detected);
       });
     }
+    refineArm64();
     refreshRelease();
     /* Keep an open page current when a new rolling build is published. */
     setInterval(refreshRelease, 10 * 60 * 1000);
