@@ -244,8 +244,8 @@
       : onelineCode.dataset.unix;
     if (onelineNote) {
       onelineNote.innerHTML = windows
-        ? 'Clones to <code>%USERPROFILE%\\Llama-RPC-Farm</code>, installs dependencies, and adds <code>farmctl</code> to your path.'
-        : 'Clones to <code>~/Llama-RPC-Farm</code>, installs everything, and puts <code>farmctl</code> on your PATH.';
+        ? 'Clones to <code>%USERPROFILE%\\Llama-RPC-Farm</code> and installs the Python app. Use Quickstart above to add engines and a first model.'
+        : 'Clones to <code>~/Llama-RPC-Farm</code> and installs the Python app. Use Quickstart above to add engines and a first model.';
     }
   }
 
@@ -288,18 +288,18 @@
     });
   });
 
-  function copyText(text) {
-    if (navigator.clipboard && window.isSecureContext) {
-      return navigator.clipboard.writeText(text);
-    }
+  function legacyCopy(text) {
     return new Promise((resolve, reject) => {
       const ta = document.createElement("textarea");
       ta.value = text;
       ta.setAttribute("readonly", "");
       ta.style.position = "fixed";
+      ta.style.top = "-1000px";
       ta.style.opacity = "0";
       document.body.appendChild(ta);
+      ta.focus();
       ta.select();
+      ta.setSelectionRange(0, text.length);
       try {
         document.execCommand("copy") ? resolve() : reject(new Error("copy failed"));
       } catch (err) {
@@ -308,6 +308,13 @@
         ta.remove();
       }
     });
+  }
+
+  function copyText(text) {
+    if (navigator.clipboard && window.isSecureContext) {
+      return navigator.clipboard.writeText(text).catch(() => legacyCopy(text));
+    }
+    return legacyCopy(text);
   }
 
   $$(".copy-btn").forEach((btn) => {

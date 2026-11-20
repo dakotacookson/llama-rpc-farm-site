@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Llama RPC Farm — Your GPUs. One farm.</title>
-  <meta name="description" content="Turn spare GPUs, workstations, and gaming rigs into one coherent local AI cluster. Open source, self-hosted, and built for llama.cpp.">
+  <meta name="description" content="Turn spare GPUs, workstations, and gaming rigs into one coherent local AI cluster. OpenAI + Anthropic compatible, open source, self-hosted, built for llama.cpp.">
   <meta name="theme-color" content="#070a10">
   <meta property="og:title" content="Llama RPC Farm — Your GPUs. One farm.">
   <meta property="og:description" content="A self-hosted control plane for distributed llama.cpp inference across every machine you own.">
@@ -37,6 +37,7 @@
         <a href="#platform">Platform</a>
         <a href="#features">Features</a>
         <a href="#themes">Themes</a>
+        <a href="#quickstart">Quickstart</a>
         <a href="#install">Install Farm</a>
         <a href="#agents">Install Agent</a>
         <a href="#cli">CLI</a>
@@ -63,7 +64,7 @@
         <h1 class="reveal">Your GPUs.<br><span class="gradient-text">One farm.</span></h1>
         <p class="lede reveal">Turn spare gaming rigs, workstations, and Linux boxes into one coherent local AI cluster. One dashboard. One API. Every model served by the hardware you already have.</p>
         <div class="hero-actions reveal">
-          <a class="btn btn-primary" href="#install">Get started
+          <a class="btn btn-primary" href="#quickstart">Start in one command
             <svg viewBox="0 0 16 16" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M3 8h9M8.5 3.5 13 8l-4.5 4.5"/></svg>
           </a>
           <a class="btn btn-ghost" href="https://github.com/dakotacookson/Llama-RPC-Farm" target="_blank" rel="noreferrer">Explore the source</a>
@@ -159,16 +160,16 @@
             </div>
           </div>
         </div>
-        <div class="float-note note-one"><span class="float-icon">↗</span><span><strong>OpenAI-compatible</strong><small>/v1/chat/completions</small></span></div>
+        <div class="float-note note-one"><span class="float-icon">↗</span><span><strong>OpenAI + Anthropic</strong><small>/v1/chat/completions · /v1/messages</small></span></div>
         <div class="float-note note-two"><span class="float-icon">◈</span><span><strong>Live telemetry</strong><small>streamed per machine</small></span></div>
       </div>
     </section>
 
     <div class="marquee" aria-hidden="true">
       <div class="marquee-track">
-        <span>llama.cpp</span><i></i><span>RPC backends</span><i></i><span>llama-swap</span><i></i><span>OpenAI-compatible API</span><i></i>
+        <span>llama.cpp</span><i></i><span>RPC backends</span><i></i><span>llama-swap</span><i></i><span>OpenAI + Anthropic API</span><i></i>
         <span>Live stats</span><i></i><span>Scoped access keys</span><i></i><span>Cross-platform</span><i></i><span>Dot matrix</span><i></i>
-        <span>llama.cpp</span><i></i><span>RPC backends</span><i></i><span>llama-swap</span><i></i><span>OpenAI-compatible API</span><i></i>
+        <span>llama.cpp</span><i></i><span>RPC backends</span><i></i><span>llama-swap</span><i></i><span>OpenAI + Anthropic API</span><i></i>
         <span>Live stats</span><i></i><span>Scoped access keys</span><i></i><span>Cross-platform</span><i></i><span>Dot matrix</span><i></i>
       </div>
     </div>
@@ -215,7 +216,7 @@
       <div class="platform-points reveal">
         <div><span>01</span><strong>Discover</strong><p>Find every agent, GPU, and loaded model across the farm.</p></div>
         <div><span>02</span><strong>Route</strong><p>Place models where they fit. Split, shard, or keep them local.</p></div>
-        <div><span>03</span><strong>Serve</strong><p>Expose one stable, OpenAI-compatible endpoint to your tools.</p></div>
+        <div><span>03</span><strong>Serve</strong><p>Expose one stable OpenAI + Anthropic endpoint to your tools.</p></div>
         <div><span>04</span><strong>Watch</strong><p>Stream live VRAM, RAM, CPU, and model activity as it happens.</p></div>
       </div>
     </section>
@@ -234,10 +235,10 @@
           </div>
           <div>
             <h3>One API. Every machine.</h3>
-            <p>Route chat, embeddings, and completions through one OpenAI-compatible surface. llama-swap decides which model wakes up and where it lives.</p>
+            <p>Route chat, embeddings, and completions through one OpenAI + Anthropic surface. llama-swap decides which model wakes up and where it lives. The Connect tab generates configs for Claude Code, Open WebUI, Continue, and more.</p>
           </div>
           <div class="api-lines" aria-hidden="true">
-            <span>POST /v1/chat/completions</span><span>POST /v1/embeddings</span><span>GET /v1/models</span>
+            <span>POST /v1/chat/completions</span><span>POST /v1/messages</span><span>GET /v1/models</span>
           </div>
         </article>
 
@@ -380,6 +381,36 @@
         </div>
       </div>
 
+      <div class="quickstart-card reveal" id="quickstart">
+        <div class="quickstart-copy">
+          <span class="oneline-title"><i></i> Quickstart — one command</span>
+          <p>Installs the app and engines, downloads a tiny model, launches llama-swap, verifies a completion, and prints the OpenAI + Anthropic endpoints plus a generated key. CPU-only is fine.</p>
+          <div class="oneline-row">
+            <code id="quickstart-code">curl -fsSL https://raw.githubusercontent.com/dakotacookson/Llama-RPC-Farm/main/scripts/quickstart.sh | bash</code>
+            <button type="button" class="copy-btn" data-copy-target="quickstart-code">
+              <svg viewBox="0 0 16 16" aria-hidden="true"><rect x="5" y="5" width="8" height="8" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.3"/><path fill="none" stroke="currentColor" stroke-width="1.3" d="M3 10.5V4a1 1 0 0 1 1-1h6.5"/></svg>
+              <span>Copy</span>
+            </button>
+          </div>
+          <div class="quickstart-docker">
+            <span>Docker</span>
+            <code>docker compose --profile demo up --build</code>
+          </div>
+          <div class="quickstart-links">
+            <a class="text-link" href="docs.html#quickstart">Quickstart guide <span>↗</span></a>
+            <a class="text-link" href="docs.html#distribution">Docker + GPU passthrough <span>↗</span></a>
+          </div>
+          <a class="text-link" href="#install">Prefer an installer or wheel? <span>↓</span></a>
+        </div>
+        <div class="quickstart-result">
+          <span class="quickstart-result-title">Ready in one pass</span>
+          <div><span>UI</span><code>http://127.0.0.1:8199</code></div>
+          <div><span>OpenAI</span><code>http://127.0.0.1:8090/v1</code></div>
+          <div><span>Anthropic</span><code>http://127.0.0.1:8090</code></div>
+          <div><span>Model</span><code>qwen3-0-6b-demo</code></div>
+        </div>
+      </div>
+
       <div class="track-label reveal"><span>Farm app</span><small>master control plane</small></div>
 
       <div class="download-grid reveal">
@@ -468,20 +499,21 @@
               <span>Copy</span>
             </button>
           </div>
-          <p class="oneline-note" id="oneline-note">Clones to <code>~/Llama-RPC-Farm</code>, installs everything, and puts <code>farmctl</code> on your PATH.</p>
+          <p class="oneline-note" id="oneline-note">Clones to <code>~/Llama-RPC-Farm</code> and installs the Python app. Use <a href="#quickstart">Quickstart</a> above to add engines and a first model.</p>
           <div class="oneline-foot"><span>Python 3.11+</span><span>git</span><span>curl</span></div>
         </div>
 
         <div class="install-after">
-          <div><span>01</span><strong>Install</strong><p>Use an installer or the source wheel. No admin account required for a local source install.</p></div>
-          <div><span>02</span><strong>Add machines</strong><p>Discover peers and let the app provision the lightweight agent.</p></div>
-          <div><span>03</span><strong>Open the farm</strong><p>Visit <code>http://127.0.0.1:8199</code> and load your first model.</p></div>
+          <div><span>01</span><strong>Quickstart</strong><p>One command installs engines, downloads a starter model, and verifies the endpoint.</p></div>
+          <div><span>02</span><strong>Add machines</strong><p>Copy one pairing command; the agent installs, pairs, and appears in the dashboard.</p></div>
+          <div><span>03</span><strong>Connect</strong><p>Open the in-app Connect page for OpenAI, Anthropic, Claude Code, Open WebUI, and more.</p></div>
         </div>
       </div>
 
       <div class="install-foot reveal">
         <a class="text-link" href="https://github.com/dakotacookson/Llama-RPC-Farm/releases" target="_blank" rel="noreferrer">All releases and checksums <span>↗</span></a>
-        <a class="text-link" href="docs.html#setup">Setup guide <span>↗</span></a>
+        <a class="text-link" href="docs.html#quickstart">Quickstart guide <span>↗</span></a>
+        <a class="text-link" href="docs.html#distribution">Docker + GPU passthrough <span>↗</span></a>
         <a class="text-link" href="#agents">Peer agent downloads <span>↓</span></a>
       </div>
 
@@ -658,7 +690,8 @@
           <a href="#platform">Platform</a>
           <a href="#features">Features</a>
           <a href="#themes">Themes</a>
-          <a href="#install">Install Farm</a>
+          <a href="#quickstart">Quickstart</a>
+        <a href="#install">Install Farm</a>
           <a href="#agents">Install Agent</a>
         </div>
         <div>
