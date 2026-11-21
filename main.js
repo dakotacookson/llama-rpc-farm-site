@@ -244,7 +244,7 @@
       quickstartNote.innerHTML = tab === "windows"
         ? 'Installs to <code>%USERPROFILE%\\Llama-RPC-Farm</code> using Python 3.11+, git, and PowerShell.'
         : tab === "docker"
-          ? 'Runs the CPU demo container. Use the Docker docs for GPU passthrough profiles.'
+          ? 'Clones the repo, then runs the CPU demo container. Use the Docker docs for GPU passthrough profiles.'
           : 'Installs to <code>~/Llama-RPC-Farm</code> using Python 3.11+, git, and curl.';
     }
   }
