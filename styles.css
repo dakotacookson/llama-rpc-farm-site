@@ -1399,3 +1399,48 @@ h1 {
   display: flex; flex-wrap: wrap; gap: 12px 18px;
   margin: 10px 0 6px;
 }
+
+/* Universal quickstart tabs/buttons */
+.quickstart-tabs {
+  display: inline-flex;
+  gap: 5px;
+  margin: 12px 0 12px;
+  padding: 4px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: rgba(0, 0, 0, .18);
+}
+.quickstart-tabs .quickstart-tab {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 30px;
+  padding: 0 12px;
+  border: 1px solid transparent;
+  border-radius: 7px;
+  background: transparent;
+  color: var(--muted);
+  font-family: var(--sans, inherit);
+  font-size: 11.5px;
+  font-weight: 600;
+  line-height: 1;
+  cursor: pointer;
+  transition: color .15s, border-color .15s, background .15s;
+}
+.quickstart-tabs .quickstart-tab:hover {
+  color: var(--text);
+  background: rgba(255, 255, 255, .04);
+}
+.quickstart-tabs .quickstart-tab.active {
+  color: var(--text);
+  border-color: rgba(var(--accent-rgb), .38);
+  background: rgba(var(--accent-rgb), .12);
+}
+.quickstart-tabs .quickstart-tab:focus-visible {
+  outline: 2px solid rgba(var(--accent-rgb), .65);
+  outline-offset: 2px;
+}
+.quickstart-links { gap: 8px 16px; }
+.quickstart-links .text-link { font-size: 12.5px; font-weight: 500; }
+#quickstart, #install-downloads { scroll-margin-top: 110px; }
+.quickstart-copy > .text-link { font-size: 12.5px; font-weight: 500; }
