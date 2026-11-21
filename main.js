@@ -232,31 +232,31 @@
     });
   });
 
-  const onelineCode = $("#oneline-code");
-  const onelineTabs = $$(".oneline-tab");
-  const onelineNote = $("#oneline-note");
+  const quickstartCode = $("#quickstart-install-code");
+  const quickstartTabs = $$(".quickstart-tab");
+  const quickstartNote = $("#quickstart-install-note");
 
-  function paintOneline(tab) {
-    if (!onelineCode) return;
-    const windows = tab === "windows";
-    onelineCode.textContent = windows
-      ? onelineCode.dataset.windows
-      : onelineCode.dataset.unix;
-    if (onelineNote) {
-      onelineNote.innerHTML = windows
-        ? 'Clones to <code>%USERPROFILE%\\Llama-RPC-Farm</code> and installs the Python app. Use Quickstart above to add engines and a first model.'
-        : 'Clones to <code>~/Llama-RPC-Farm</code> and installs the Python app. Use Quickstart above to add engines and a first model.';
+  function paintQuickstart(tab) {
+    if (!quickstartCode) return;
+    const value = quickstartCode.dataset[tab] || quickstartCode.dataset.unix;
+    quickstartCode.textContent = value;
+    if (quickstartNote) {
+      quickstartNote.innerHTML = tab === "windows"
+        ? 'Installs to <code>%USERPROFILE%\\Llama-RPC-Farm</code> using Python 3.11+, git, and PowerShell.'
+        : tab === "docker"
+          ? 'Runs the CPU demo container. Use the Docker docs for GPU passthrough profiles.'
+          : 'Installs to <code>~/Llama-RPC-Farm</code> using Python 3.11+, git, and curl.';
     }
   }
 
-  onelineTabs.forEach((tab) => {
+  quickstartTabs.forEach((tab) => {
     tab.addEventListener("click", () => {
-      onelineTabs.forEach((t) => {
+      quickstartTabs.forEach((t) => {
         const active = t === tab;
         t.classList.toggle("active", active);
         t.setAttribute("aria-selected", String(active));
       });
-      paintOneline(tab.dataset.oneline);
+      paintQuickstart(tab.dataset.quickstart);
     });
   });
 

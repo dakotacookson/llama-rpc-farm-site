@@ -383,25 +383,27 @@
 
       <div class="quickstart-card reveal" id="quickstart">
         <div class="quickstart-copy">
-          <span class="oneline-title"><i></i> Quickstart — one command</span>
-          <p>Installs the app and engines, downloads a tiny model, launches llama-swap, verifies a completion, and prints the OpenAI + Anthropic endpoints plus a generated key. CPU-only is fine.</p>
+          <span class="oneline-title"><i></i> One-line install — quickstart</span>
+          <p>Installs the app and engines, downloads a tiny model, launches llama-swap, verifies a completion, and prints the OpenAI + Anthropic endpoints plus a generated key. Linux, macOS, Windows, and Docker.</p>
+          <div class="quickstart-tabs" role="tablist" aria-label="Quickstart platform">
+            <button type="button" class="quickstart-tab active" data-quickstart="unix" role="tab" aria-selected="true">Linux / macOS</button>
+            <button type="button" class="quickstart-tab" data-quickstart="windows" role="tab" aria-selected="false">Windows</button>
+            <button type="button" class="quickstart-tab" data-quickstart="docker" role="tab" aria-selected="false">Docker</button>
+          </div>
           <div class="oneline-row">
-            <code id="quickstart-code">curl -fsSL https://raw.githubusercontent.com/dakotacookson/Llama-RPC-Farm/main/scripts/quickstart.sh | bash</code>
-            <button type="button" class="copy-btn" data-copy-target="quickstart-code">
+            <code id="quickstart-install-code" data-unix="curl -fsSL https://raw.githubusercontent.com/dakotacookson/Llama-RPC-Farm/main/scripts/quickstart.sh | bash" data-windows="irm https://raw.githubusercontent.com/dakotacookson/Llama-RPC-Farm/main/scripts/quickstart.ps1 | iex" data-docker="docker compose --profile demo up --build">curl -fsSL https://raw.githubusercontent.com/dakotacookson/Llama-RPC-Farm/main/scripts/quickstart.sh | bash</code>
+            <button type="button" class="copy-btn" data-copy-target="quickstart-install-code">
               <svg viewBox="0 0 16 16" aria-hidden="true"><rect x="5" y="5" width="8" height="8" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.3"/><path fill="none" stroke="currentColor" stroke-width="1.3" d="M3 10.5V4a1 1 0 0 1 1-1h6.5"/></svg>
               <span>Copy</span>
             </button>
           </div>
-          <div class="quickstart-docker">
-            <span>Docker</span>
-            <code>docker compose --profile demo up --build</code>
-          </div>
+          <p class="oneline-note" id="quickstart-install-note">Installs to <code>~/Llama-RPC-Farm</code> using Python 3.11+, git, and curl.</p>
           <div class="quickstart-links">
             <a class="text-link" href="docs.html#quickstart">Quickstart guide <span>↗</span></a>
             <a class="text-link" href="docs.html#distribution">Docker + GPU passthrough <span>↗</span></a>
             <a class="text-link" href="docs.html#public-api">Tailscale or public HTTPS API <span>↗</span></a>
           </div>
-          <a class="text-link" href="#install">Prefer an installer or wheel? <span>↓</span></a>
+          <a class="text-link" href="#install-downloads">Prefer an installer or wheel? <span>↓</span></a>
         </div>
         <div class="quickstart-result">
           <span class="quickstart-result-title">Ready in one pass</span>
@@ -414,7 +416,7 @@
 
       <div class="track-label reveal"><span>Farm app</span><small>master control plane</small></div>
 
-      <div class="download-grid reveal">
+      <div class="download-grid reveal" id="install-downloads">
         <article class="download-card" data-os="windows">
           <span class="download-recommend">Recommended</span>
           <div class="download-head">
@@ -485,25 +487,6 @@
       </div>
 
       <div class="install-lower reveal">
-        <div class="oneline-card">
-          <div class="oneline-head">
-            <span class="oneline-title"><i></i> One-line install</span>
-            <div class="oneline-tabs" role="tablist" aria-label="One-line install platform">
-              <button type="button" class="oneline-tab active" data-oneline="unix" role="tab" aria-selected="true">Linux / macOS</button>
-              <button type="button" class="oneline-tab" data-oneline="windows" role="tab" aria-selected="false">Windows</button>
-            </div>
-          </div>
-          <div class="oneline-row">
-            <code id="oneline-code" data-unix="curl -fsSL https://raw.githubusercontent.com/dakotacookson/Llama-RPC-Farm/main/scripts/install-remote.sh | bash" data-windows="irm https://raw.githubusercontent.com/dakotacookson/Llama-RPC-Farm/main/scripts/install-remote.ps1 | iex">curl -fsSL https://raw.githubusercontent.com/dakotacookson/Llama-RPC-Farm/main/scripts/install-remote.sh | bash</code>
-            <button type="button" class="copy-btn" data-copy-target="oneline-code">
-              <svg viewBox="0 0 16 16" aria-hidden="true"><rect x="5" y="5" width="8" height="8" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.3"/><path fill="none" stroke="currentColor" stroke-width="1.3" d="M3 10.5V4a1 1 0 0 1 1-1h6.5"/></svg>
-              <span>Copy</span>
-            </button>
-          </div>
-          <p class="oneline-note" id="oneline-note">Clones to <code>~/Llama-RPC-Farm</code> and installs the Python app. Use <a href="#quickstart">Quickstart</a> above to add engines and a first model.</p>
-          <div class="oneline-foot"><span>Python 3.11+</span><span>git</span><span>curl</span></div>
-        </div>
-
         <div class="install-after">
           <div><span>01</span><strong>Quickstart</strong><p>One command installs engines, downloads a starter model, and verifies the endpoint.</p></div>
           <div><span>02</span><strong>Add machines</strong><p>Copy one pairing command; the agent installs, pairs, and appears in the dashboard.</p></div>

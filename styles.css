@@ -1177,11 +1177,8 @@ h1 {
 .download-card-source { border-style: dashed; }
 .download-card-source .os-icon { border-color: var(--line); background: transparent; color: var(--text-2); }
 .install-lower {
-  display: grid;
-  grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr);
-  gap: 12px;
+  display: block;
   margin-top: 12px;
-  align-items: start;
 }
 .oneline-card {
   padding: 19px;
@@ -1190,8 +1187,9 @@ h1 {
   background: linear-gradient(180deg, rgba(12,20,33,.9), rgba(8,13,22,.9));
 }
 .oneline-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 12px; flex-wrap: wrap; }
-.oneline-tabs { display: flex; gap: 3px; }
-.oneline-tab {
+.oneline-tabs, .quickstart-tabs { display: flex; gap: 3px; flex-wrap: wrap; }
+.quickstart-tabs { margin: 12px 0 10px; }
+.oneline-tab, .quickstart-tab {
   padding: 4px 7px;
   border: 1px solid transparent;
   border-radius: 5px;
@@ -1202,8 +1200,8 @@ h1 {
   cursor: pointer;
   transition: color .15s, border-color .15s, background .15s;
 }
-.oneline-tab:hover { color: var(--text-2); }
-.oneline-tab.active { color: var(--text); border-color: var(--line); background: rgba(255,255,255,.045); }
+.oneline-tab:hover, .quickstart-tab:hover { color: var(--text-2); }
+.oneline-tab.active, .quickstart-tab.active { color: var(--text); border-color: var(--line); background: rgba(255,255,255,.045); }
 .oneline-title { display: inline-flex; align-items: center; gap: 8px; color: var(--text-2); font-family: var(--mono); font-size: 9px; letter-spacing: .07em; text-transform: uppercase; }
 .oneline-title i { width: 5px; height: 5px; border-radius: 50%; background: var(--good); box-shadow: 0 0 9px currentColor; }
 .oneline-os { color: var(--muted); font-family: var(--mono); font-size: 8px; }
